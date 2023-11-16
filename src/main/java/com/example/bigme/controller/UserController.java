@@ -6,9 +6,12 @@ import com.example.bigme.pojo.Result;
 import com.example.bigme.pojo.User;
 import com.example.bigme.service.UserService;
 import com.example.bigme.utils.JwtUtil;
+import com.example.bigme.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -67,6 +70,55 @@ public class UserController {
         String username = (String) claim.get("username");
         User user = userService.findUserByName(username);
         return Result.success(user);
+    }
+
+    @PostMapping("/update")
+    public Result<Object> update(
+            @RequestBody @Validated User user
+    ) {
+        userService.update(user);
+        return Result.success();
+    }
+
+    @PostMapping("/updateAvatar")
+    public Result updateAvatar(
+            @RequestParam String avatar
+    ) {
+        userService.updateAvatar(avatar);
+        return Result.success();
+    }
+
+    @PostMapping("/updatePwd")
+    public Result<Object> updatePwd(
+            @RequestBody Map<String, String> params
+    ) {
+
+        String old_pwd = params.get("old_pwd");
+        String new_pwd = params.get("new_pwd");
+        String re_pwd = params.get("re_pwd");
+
+        // 校验参数
+        if (!StringUtils.hasLength(old_pwd) || !StringUtils.hasLength(new_pwd) || !StringUtils.hasLength(re_pwd)) {
+            return Result.error("缺少必要的参数");
+        }
+
+
+        //原密码是否正确
+        Map<String, Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
+        User userByName = userService.findUserByName(username);
+        String password = userByName.getPassword();
+        if (!password.equals(Arrays.toString(DigestUtils.md5Digest(old_pwd.getBytes())))) {
+            return Result.error("原密码不正确");
+        }
+
+        // new_pwd 和 re_pwd
+        if (!re_pwd.equals(new_pwd)) {
+            return Result.error("两次密码不一致");
+        }
+
+        userService.updatePwd(new_pwd);
+        return Result.success();
     }
 }
 

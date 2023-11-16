@@ -3,9 +3,14 @@ package com.example.bigme.service.imp;
 import com.example.bigme.mapper.UserMapper;
 import com.example.bigme.pojo.User;
 import com.example.bigme.service.UserService;
+import com.example.bigme.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Map;
 
 
 @Service
@@ -27,5 +32,25 @@ public class UserServiceImp implements UserService {
         String s = new String(DigestUtils.md5Digest(password.getBytes()));
 
         userMapper.register(username, s);
+    }
+
+    @Override
+    public void update(User user) {
+        user.setUpdateTime(LocalDateTime.now());
+        userMapper.update(user);
+    }
+
+    @Override
+    public void updateAvatar(String avatar) {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        userMapper.updateAvatar(avatar, id);
+    }
+
+    @Override
+    public void updatePwd(String new_pwd) {
+        Map<String, Object> claims = ThreadLocalUtil.get();
+        Integer id = (Integer) claims.get("id");
+        userMapper.updatePwd(Arrays.toString(DigestUtils.md5Digest(new_pwd.getBytes())), id);
     }
 }
