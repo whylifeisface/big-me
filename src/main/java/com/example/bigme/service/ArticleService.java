@@ -1,11 +1,11 @@
 package com.example.bigme.service;
 
-import com.example.bigme.pojo.Category;
+import com.example.bigme.pojo.Article;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface ArticleService {
 
-    void add(Category category);
+    void add(Article article);
 
 }

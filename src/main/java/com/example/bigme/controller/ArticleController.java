@@ -1,5 +1,6 @@
 package com.example.bigme.controller;
 
+import com.example.bigme.pojo.Article;
 import com.example.bigme.pojo.Category;
 import com.example.bigme.pojo.Result;
 import com.example.bigme.service.ArticleService;
@@ -18,11 +19,21 @@ import java.util.Map;
 public class ArticleController {
 
 
+    @Autowired
+    private ArticleService articleService;
+
     @GetMapping("/list")
     public Result<Object> list() {
         Map<String, Object> claims = ThreadLocalUtil.get();
         String username = (String) claims.get("username");
+        return Result.success();
+    }
 
+    @GetMapping("/add")
+    public Result<Object> add(
+            @RequestBody Article article
+            ){
+        articleService.add(article);
         return Result.success();
     }
 
