@@ -15,13 +15,13 @@ public class redisTest {
     private StringRedisTemplate redisTemplate;
     @Test
     public void setKey(){
-        ValueOperations<String, String> opts = redisTemplate.opsForValue();
-        opts.set("username", "oi");
+//        ValueOperations<String, String> opts = redisTemplate.opsForValue();
+//        opts.set("username", "oi");
     }
 
     @Test
     public void getKey(){
-        ValueOperations<String, String> opts = redisTemplate.opsForValue();
-        opts.get("username");
+//        ValueOperations<String, String> opts = redisTemplate.opsForValue();
+//        opts.get("username");
     }
 }

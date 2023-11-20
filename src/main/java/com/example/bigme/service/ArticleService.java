@@ -4,7 +4,6 @@ import com.example.bigme.pojo.Article;
 import com.example.bigme.pojo.PageBean;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface ArticleService {
 
     void add(Article article);

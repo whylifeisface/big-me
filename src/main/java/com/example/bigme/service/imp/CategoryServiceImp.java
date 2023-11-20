@@ -5,9 +5,11 @@ import com.example.bigme.pojo.Category;
 import com.example.bigme.service.CategoryService;
 import com.example.bigme.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+@Service
 
 public class CategoryServiceImp implements CategoryService {
 

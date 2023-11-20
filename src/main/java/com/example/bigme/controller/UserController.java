@@ -9,14 +9,18 @@ import com.example.bigme.utils.JwtUtil;
 import com.example.bigme.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -24,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @PostMapping("/register")
     public Result<Object> register(
@@ -55,6 +62,8 @@ public class UserController {
             claim.put("id", user.getId());
             claim.put("username", user.getUsername());
             String token = JwtUtil.genToken(claim);
+            ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+            ops.set(token, token, 1, TimeUnit.HOURS);
             return Result.success(token);
         }
 
@@ -90,7 +99,8 @@ public class UserController {
 
     @PostMapping("/updatePwd")
     public Result<Object> updatePwd(
-            @RequestBody Map<String, String> params
+            @RequestBody Map<String, String> params,
+            @RequestParam("Authorization") String token
     ) {
 
         String old_pwd = params.get("old_pwd");
@@ -118,6 +128,10 @@ public class UserController {
         }
 
         userService.updatePwd(new_pwd);
+
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        ops.getOperations().delete(token);
+
         return Result.success();
     }
 }
