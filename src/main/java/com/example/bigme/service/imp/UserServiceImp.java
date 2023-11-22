@@ -29,7 +29,7 @@ public class UserServiceImp implements UserService {
     public void register(String username, String password) {
 
         /*给密码加密*/
-        String s = new String(DigestUtils.md5Digest(password.getBytes()));
+        String s = new String(DigestUtils.md5DigestAsHex(password.getBytes()));
 
         userMapper.register(username, s);
     }
@@ -51,6 +51,6 @@ public class UserServiceImp implements UserService {
     public void updatePwd(String new_pwd) {
         Map<String, Object> claims = ThreadLocalUtil.get();
         Integer id = (Integer) claims.get("id");
-        userMapper.updatePwd(Arrays.toString(DigestUtils.md5Digest(new_pwd.getBytes())), id);
+        userMapper.updatePwd(DigestUtils.md5DigestAsHex(new_pwd.getBytes()), id);
     }
 }

@@ -3,12 +3,40 @@ package com.example.bigme.pojo;
 
 //统一响应结果
 
+import lombok.Data;
+
+import java.io.Serializable;
+
 public class Result<T> {
     private Integer code;//业务状态码  0-成功  1-失败
     private String message;//提示信息
     private T data;//响应数据
 
-    public Result(int code  , String message, T data) {
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Result(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;

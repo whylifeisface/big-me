@@ -32,6 +32,7 @@ public class UserController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+//    406
     @PostMapping("/register")
     public Result<Object> register(
             @Pattern(regexp = "^\\S{5,16}$")
@@ -39,6 +40,7 @@ public class UserController {
             @Pattern(regexp = "^\\${5,16}$")
             @RequestParam String password
     ) {
+
         User user = userService.findUserByName(username);
         if (user == null) {
             userService.register(username, password);
@@ -57,7 +59,7 @@ public class UserController {
         if (user == null) {
             return Result.error("用户名错误");
         }
-        if (Arrays.toString(DigestUtils.md5Digest(password.getBytes())).equals(user.getPassword())) {
+        if (DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.getPassword())) {
             HashMap<String, Object> claim = new HashMap<>();
             claim.put("id", user.getId());
             claim.put("username", user.getUsername());
