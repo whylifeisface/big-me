@@ -22,23 +22,27 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
-
     @GetMapping("/list")
     public Result<Object> list(
             Integer pageNum,
             Integer pageSize,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String state
-            ) {
+    ) {
+        //分页查询文章列表
         PageBean<Article> list = articleService.list(pageNum, pageSize, categoryId, state);
         return Result.success(list);
     }
 
     @PostMapping("/update")
-    public Result<Object> update(){
+    public Result<Object> update(
+            @RequestBody Article article
+    ){
+        //确认存在
+        Article art = articleService.findById(article.getId());
 
-
-
+        //更新文章
+        articleService.update(article);
 
         return Result.success();
     }
@@ -48,6 +52,7 @@ public class ArticleController {
     public Result<Object> add(
             @RequestBody Article article
     ) {
+        //添加文章
         articleService.add(article);
         return Result.success();
     }

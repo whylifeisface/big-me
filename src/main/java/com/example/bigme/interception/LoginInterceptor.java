@@ -24,20 +24,25 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 
+        //获取token
         String token = request.getHeader("token");
 
         try {
 
+            //从redis中获取token
             ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
             String redisToken = ops.get(token);
             if (redisToken == null) {
                 throw new RuntimeException();
             }
+            //解析token
             Map<String, Object> claims = JwtUtil.parseToken(token);
 
+            //将token中的信息存储到ThreadLocal中
             ThreadLocalUtil.set(claims);
             return true;
         } catch (Exception e) {
+            //token无效，返回401
             response.setStatus(401);
             return false;
         }

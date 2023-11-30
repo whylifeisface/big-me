@@ -56,4 +56,15 @@ public class ArticleServiceImp implements ArticleService {
         bean.setItems(articlePageInfo.getResult());
         return bean;
     }
+
+    @Override
+    public Article findById(Integer id) {
+         return articleMapper.findById(id);
+
+    }
+
+    @Override
+    public void update(Article article) {
+        articleMapper.update(article);
+    }
 }
