@@ -1,12 +1,16 @@
+server:
+  port: 9001
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.236.140:3306/big_event
+    url: jdbc:mysql://localhost:3306/big_event?serverTimezone=UTC
     username: root
     password: root
   data:
     redis:
-      host: 192.168.236.140
+      host: 192.168.10.129
       port: 6379
 
 mybatis:
@@ -14,6 +18,7 @@ mybatis:
     map-underscore-to-camel-case: true
 #  开启驼峰命名和下划线命名自动转换
 debug: true
+
 logging:
   level:
     com.example.bigme.mapper: trace

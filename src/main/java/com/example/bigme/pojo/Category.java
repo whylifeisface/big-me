@@ -8,6 +8,7 @@ import lombok.Data;
 import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Data
@@ -21,10 +22,10 @@ public class Category {
     @NotEmpty
     private String categoryAlias;//分类别名
     private Integer createUser;//创建人ID
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;//创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;//创建时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;//更新时间
+    private Date updateTime;//更新时间
 
 
     //指定分组校验

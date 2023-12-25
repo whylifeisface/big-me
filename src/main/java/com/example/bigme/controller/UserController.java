@@ -48,6 +48,7 @@ public Result<Object> register(
 
     // 判断用户名是否已被注册
     User user = userService.findUserByName(username);
+
     if (user == null) {
         // 注册
         userService.register(username, password);
@@ -84,6 +85,7 @@ public Result<Object> register(
             ops.set(token, token, 1, TimeUnit.HOURS);
             // 返回token
             return Result.success(token);
+
         }
 
         // 返回错误信息

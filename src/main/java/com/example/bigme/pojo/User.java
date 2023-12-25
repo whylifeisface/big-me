@@ -22,7 +22,8 @@ public class User {
 
 
     @NotEmpty
-    @Pattern(regexp = "^s{1,10}$")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{1,16}$")
+    //
     private String nickname;//昵称
 
     @NotEmpty

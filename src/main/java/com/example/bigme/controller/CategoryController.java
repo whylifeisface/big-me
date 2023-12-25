@@ -6,6 +6,7 @@ import com.example.bigme.pojo.Result;
 import com.example.bigme.service.ArticleService;
 import com.example.bigme.service.CategoryService;
 import com.example.bigme.utils.ThreadLocalUtil;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -43,7 +44,10 @@ public class CategoryController {
 
     // 获取分类详情
     @GetMapping("/detail")
-    public Result<Object> detail(Integer id){
+    public Result<Object> detail(
+
+           @RequestParam Integer id
+    ){
         // 调用服务层根据id获取分类详情
         Category category = categoryService.findById(id);
         return Result.success();
@@ -56,6 +60,13 @@ public class CategoryController {
     ){
         // 调用服务层更新分类
         categoryService.update(category);
+        return Result.success();
+    }
+
+    @DeleteMapping("/delete")
+    public Result<Object> delete(Integer id){
+        // 调用服务层删除分类
+        categoryService.delete(id);
         return Result.success();
     }
 

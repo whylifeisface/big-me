@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 
         //获取token
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
 
         try {
 
