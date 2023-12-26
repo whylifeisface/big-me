@@ -6,8 +6,6 @@ import com.example.bigme.pojo.Result;
 import com.example.bigme.service.FreeImgService;
 import kong.unirest.*;
 import kong.unirest.json.JSONObject;
-import okhttp3.*;
-import okhttp3.MultipartBody;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

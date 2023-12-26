@@ -13,18 +13,18 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
 
-    @Insert("insert into article(titlem, content,cover_img,state,category_id,create_user,create_time,update_time" +
-            "values(#{title}, #{content} , #{coverImg} ,#{state}, #{categoryId}, #{createUser}, #{createTime}, #{updateTime}))")
+    @Insert("insert into article(title, content,cover_img,state,category_id,create_user,create_time,update_time)" +
+            "values(#{title}, #{content} , #{coverImg} ,#{state}, #{categoryId}, #{createUser}, #{createTime}, #{updateTime})")
     void add(Article article);
 
     //在xml里面实现了
     List<Article> list(Integer categoryId, String state, Integer id);
 
-    @Select("select titlem, content,cover_img,state,category_id,create_user,create_time,update_time from article where id = #{id}")
+    @Select("select title, content,cover_img,state,category_id,create_user,create_time,update_time from article where id = #{id}")
     Article findById(Integer id);
 
     @Update("update article set " +
-            "titlem = #{titlem},content = #{content}, state = #{state},category_id = #{categoryId}  " +
+            "title = #{title},content = #{content}, state = #{state},category_id = #{categoryId}  " +
             "create_user = #{createUser}, create_time = #{createTime}, update_time = #{updateTime}" +
             "where id = #{id}")
     void update(Article article);

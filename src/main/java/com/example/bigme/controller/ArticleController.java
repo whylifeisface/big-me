@@ -48,7 +48,7 @@ public class ArticleController {
     }
 
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public Result<Object> add(
             @RequestBody Article article
     ) {
