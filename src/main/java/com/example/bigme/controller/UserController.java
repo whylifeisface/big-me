@@ -133,15 +133,20 @@ public Result<Object> register(
     @PostMapping("/updatePwd")
     public Result<Object> updatePwd(
             // 获取参数
-            @RequestBody Map<String, String> params,
+            // 用户名
+            String old_pwd,
+            // 密码
+            String new_pwd,
+            String re_pwd,
+
             // 获取token
-            @RequestParam("Authorization") String token
+            @RequestHeader("Authorization") String token
     ) {
 
         // 获取参数
-        String old_pwd = params.get("old_pwd");
-        String new_pwd = params.get("new_pwd");
-        String re_pwd = params.get("re_pwd");
+//        String old_pwd = params.get("old_pwd");
+//        String new_pwd = params.get("new_pwd");
+//        String re_pwd = params.get("re_pwd");
 
         // 校验参数
         if (!StringUtils.hasLength(old_pwd) || !StringUtils.hasLength(new_pwd) || !StringUtils.hasLength(re_pwd)) {
@@ -159,7 +164,7 @@ public Result<Object> register(
         // 获取密码
         String password = userByName.getPassword();
         // 判断原密码是否正确
-        if (!password.equals(Arrays.toString(DigestUtils.md5Digest(old_pwd.getBytes())))) {
+        if (!password.equals(DigestUtils.md5DigestAsHex(old_pwd.getBytes()))) {
             // 返回错误信息
             return Result.error("原密码不正确");
         }

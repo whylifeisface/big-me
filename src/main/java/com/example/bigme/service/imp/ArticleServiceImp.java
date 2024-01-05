@@ -38,7 +38,7 @@ public class ArticleServiceImp implements ArticleService {
     @Override
     public PageBean<Article> list(Integer pageNum, Integer pageSize, Integer categoryId, String state) {
         //创建bean
-        Page<Article> startPage = PageHelper.startPage(pageNum, pageSize);
+//        Page<Article> startPage = PageHelper.startPage(pageNum, pageSize);
 
 //        PageHelper.offsetPage(pageNum, pageSize);
         PageBean<Article> bean = new PageBean<>();
@@ -48,8 +48,8 @@ public class ArticleServiceImp implements ArticleService {
         Map<String, Object> map = ThreadLocalUtil.get();
         Integer id = (Integer) map.get("id");
         List<Article> articles = articleMapper.list(categoryId, state, id);
+        bean.setTotal(articles.size());
         bean.setItems(articles);
-        bean.setTotal((long) articles.size());
         return bean;
     }
 

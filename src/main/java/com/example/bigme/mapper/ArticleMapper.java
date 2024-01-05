@@ -18,6 +18,8 @@ public interface ArticleMapper {
     void add(Article article);
 
     //在xml里面实现了
+//    @Select("<script>select * from article where create_user = #{id} <when test='categoryId != null'> and categoryId = #{categoryId}</when> " +
+//            "<when test='state != null'> and state = #{state}</when> </script>")
     List<Article> list(Integer categoryId, String state, Integer id);
 
     @Select("select title, content,cover_img,state,category_id,create_user,create_time,update_time from article where id = #{id}")
