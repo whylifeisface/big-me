@@ -5,19 +5,19 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/big_event?serverTimezone=UTC
+    url: jdbc:mysql://8.130.12.69:3306/big_event?serverTimezone=UTC
     username: root
-    password: root
+    password: Twx18874158!
   data:
     redis:
-      host: 192.168.10.129
+      host: 8.130.12.69
       port: 6379
 
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations:
-    classpath: mapper/*.xml
+#    classpath: mapper/*.xml
 #  开启驼峰命名和下划线命名自动转换
 debug: true
 
